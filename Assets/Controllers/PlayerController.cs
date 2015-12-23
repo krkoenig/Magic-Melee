@@ -68,8 +68,12 @@ public class PlayerController : NetworkBehaviour
     private void CmdFireSpell(string axis, Vector3 mouseAngle)
 	{
         Spell spell = spellControl.getSpell(axis);
-        GameObject spellObj = spell.fire(transform.position, mouseAngle);
-        NetworkServer.Spawn(spellObj);
+
+        if(spell != null)
+        {
+            GameObject spellObj = spell.fire(transform.position, mouseAngle);
+            NetworkServer.Spawn(spellObj);
+        }
 	}
 
 	// Gets the angle between the player and the mouse cursor
