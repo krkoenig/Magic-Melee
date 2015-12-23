@@ -16,7 +16,9 @@ public class WizardSpellController : SpellController
     public override void buildSpell(string axis)
     {
         if (isFireball(axis))
-                CmdSetFireball(axis);  
+            CmdSetFireball(axis);
+        if (isBomb(axis))
+            CmdSetBomb(axis);
     }
 
     public void addAir()
@@ -96,5 +98,22 @@ public class WizardSpellController : SpellController
             rightSpell = new Fireball();
     }
 
+    public bool isBomb(string axis)
+    {
+        return isPrimary((Element)WizardElement.FIRE, axis) &&
+            isSecondary((Element)WizardElement.EARTH, axis) &&
+            !isSecondary((Element)WizardElement.ARCANE, axis) &&
+            !isSecondary((Element)WizardElement.AIR, axis) &&
+            !isSecondary((Element)WizardElement.WATER, axis);
+    }
+
+    [Command]
+    private void CmdSetBomb(string axis)
+    {
+        if (axis == Constants.FIRE_LEFT)
+            leftSpell = new Bomb();
+        else if (axis == Constants.FIRE_RIGHT)
+            rightSpell = new Bomb();
+    }
 }
 
